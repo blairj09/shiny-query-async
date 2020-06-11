@@ -6,7 +6,7 @@ library(pool)
 con <- dbPool(RSQLite::SQLite(), dbname = "tmp.sqlite")
 
 onStop(function() {
-  poolClose(pool)
+  poolClose(con)
 })
 
 shinyApp(
