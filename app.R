@@ -25,20 +25,24 @@ shinyApp(
     })
     
     query_result <- eventReactive(input$btn, {
-      DBI::dbGetQuery(con,
-                      "WITH RECURSIVE r(i) AS (
+      x <- system.time({
+        DBI::dbGetQuery(con,
+                        "WITH RECURSIVE r(i) AS (
                           VALUES(0)
                           UNION ALL
                           SELECT i FROM r
-                          LIMIT 100000000
+                          LIMIT 10000000
                         )
                         SELECT i FROM r WHERE i = 1;")
+      })
+      
+      x[["elapsed"]]
     })
     
     output$query_status <- renderText({
       query_result() %>%
         (function(result) {
-          paste0("[", Sys.time(), "] Query completed: ", result)
+          paste0("[", Sys.time(), "] Query completed in ", result, " seconds")
         })
     })
     
