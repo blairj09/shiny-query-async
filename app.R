@@ -1,4 +1,5 @@
 library(shiny)
+library(dplyr)
 library(DBI)
 library(pool)
 
