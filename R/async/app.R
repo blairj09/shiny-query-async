@@ -3,7 +3,7 @@ library(promises)
 library(future)
 library(DBI)
 
-plan(multisession)
+plan(multiprocess)
 
 shinyApp(
   ui = fluidPage(
