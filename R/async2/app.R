@@ -17,7 +17,12 @@ shinyApp(
   server = function(input, output, session) {
     
     conn <- function(args) {
-      if (!exists(".con")) .con <<- do.call(DBI::dbConnect, eval(dbargs))
+      if (!exists(".con")){
+        message(".con does not exist. Creating .con")
+        .con <<- do.call(DBI::dbConnect, eval(dbargs))
+      } else {
+        message(".con already exists.")
+      }
       return(.con)
     }
     dbargs <- substitute(list(drv = RSQLite::SQLite(), "tmp.sqlite"))
